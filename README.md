@@ -1,20 +1,25 @@
-# download_examp_papers
+# download_exam_papers
 ## Description
-This script is to download the PDF examp papers from the Singapore testpapersfree website automantically. Thank to this website.
+Downloads Singapore primary school exam papers (PDF) from testpapersfree.com. Thanks to that website.
 
-## Before running it
-1. Modify the key parameters to fulfill your indivicial requirement is necessary.
-* __grade__: Which of the academy grade to choose.
-* __year_list__: The time period you'd like to have. Should be a list.
-* __subject_choose__: The exam subject with only single choise.
-* __stage_choose__: The exam type to choose.
+## Install
+```
+pip install -r requirements.txt
+```
 
-2. Adjust the HOME path in __pyvenv.cfg__ file.
+## Usage
+```
+python exam_pdf_download.py --grades P5 --subjects English --years 2015-2025
+python exam_pdf_download.py --grades P5 --subjects English --years 2024 --stages CA1,SA1 --dry-run
+```
 
-## How to execute it
-The code can run independently with virtul env included. Run the script by commands below:\
-`
-nohup bin/python main.py >/dev/null &
-`
+Options:
+* `--grades`: P1–P6, comma-separated.
+* `--subjects`: English, Chinese, Maths, Science, ... comma-separated.
+* `--years`: a range (`2015-2025`) or a list (`2023,2024`). Years before 2015 are refused.
+* `--stages`: `CA1` (WA1), `SA1` (WA2 / SA1), `CA2` (WA3), `SA2` (SA2 / EOY). Default: all four.
+* `--out`: download folder (default `~/Downloads/testpapersfree`); files go into `<out>/<grade>/<subject>/`.
+* `--delay`: seconds between requests (default 1.5).
 
-
+Files already in the target folder are skipped, so re-running only fetches new papers.
+Each folder gets a `_manifest.json` recording where every file came from.
